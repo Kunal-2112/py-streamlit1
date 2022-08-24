@@ -14,13 +14,13 @@ warnings.filterwarnings("ignore")
 # front end elements of the web page
 
 html_temp = """
-    <header style="margin:0px 0;">
-    <div style ="background-color:#00aebd;padding:100px;style="border:orange; border-width:5px; border-style:solid;">
+    <header style="font-size:10px;width=100">
+    <div style ="background-color:#00aebd;border-style:solid;">
     <img src="https://renom.in/wp-content/uploads/2022/02/cropped-renom-logo.86b197ce-e1644472068111-1.png" style="float:Right;width:200px;height:50px;border:orange; border-width:5px; border-style:solid;">
     <h1 style ="color:black;text-align:center;">INOX TML Analysis</h1>
-    <h2 style ="color:black;text-align:center;">O&M-Engineering </h2></header>
+    <h2 style ="color:black;text-align:center;">O&M-Engineering </h2>
     <h3 style ="color:black;text-align:center;">Renom Energy Services Pvt Ltd </h3>
-    <h6 style ="color:black;text-align:center;"> Preapred By-Kunal lite/Suraj Shinde</h6>
+    <h6 style ="color:black;text-align:center;"> Preapred By-Kunal lite/Suraj Shinde</h6></header>
     </div>
 
     """
@@ -34,7 +34,7 @@ Ideal_data1 = {
 
 
 
-uploaded_file = st.sidebar.file_uploader("Upload files", type=['xlsx'])
+uploaded_file = st.sidebar.file_uploader("Upload TML files", type=['xlsx'])
 if uploaded_file is not None:
     df = pd.read_excel(uploaded_file)
     # Data Cleaning : 1.unwanted column source name deleted
@@ -58,7 +58,7 @@ if uploaded_file is not None:
                                         ('GearBox Temperature', "Converter Temperature", "Generator Temperature",
                                          "Voltage", 'Blade KPI', "Power Chart", "Power Curve"))
 
-    if chart_visual == 'Blade':
+    if chart_visual == 'Blade KPI':
         fig = go.Figure()
         # Voltage graph
         df21 = df3[['Angle blade 1 - AVE [°]', 'Angle blade 2 - AVE [°]', 'Angle blade 3 - AVE [°]',
@@ -154,7 +154,7 @@ if uploaded_file is not None:
 
     if chart_visual == 'Power Chart':
         df8 = df3[['Active power - AVE [kW]', 'Wind speed - AVE [m/s]']]
-        fig = px.bar(df8, x=df8.index, y=df8.columns[0:2], title="Production (kw)")
+        fig = px.scatter(df8, x=df8.index, y=df8.columns[0:2], title="Production (kw)")
         st.plotly_chart(fig)
 
     if chart_visual == 'Power Curve':
@@ -169,12 +169,13 @@ if uploaded_file is not None:
         plt.plot(Ideal_data1['x'], Ideal_data1['y'], '-', label='Ideal_power_curve (kwh)',lw=5)
         plt.xlabel('wind speed (m/s)', size=25)
         plt.ylabel('Power Production (kw)', size=25)
-        plt.title('Wind Turbine Power Production')
+        plt.title('--- Wind Turbine Power Production ---', size=30)
         plt.legend(fontsize=25)
         plt.xticks([0,2,4,6,8,10,12,14,16,18,20],size=20)
         plt.yticks([0,200,400,600,800,1000,1200,1400,1600,1800,2000,2200],size=20)
         plt.grid()
         st.pyplot()
+        st.write("Welcome to Git....Code is push")
 
 
 
