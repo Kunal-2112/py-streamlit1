@@ -10,6 +10,7 @@ import html
 
 st.set_option('deprecation.showPyplotGlobalUse', False)
 warnings.filterwarnings("ignore")
+st.set_page_config(layout="wide")
 
 # front end elements of the web page
 
@@ -37,6 +38,20 @@ Ideal_data1 = {
 uploaded_file = st.sidebar.file_uploader("Upload TML files", type=['xlsx'])
 if uploaded_file is not None:
     df = pd.read_excel(uploaded_file)
+
+    #Renaming Columns names
+    def renaming_fun(x):
+        if "C11_CON/.Glo.Con.LscIgbTemMax - AVE [C]" in x or "Line-side IGBT max.temp. - AVE [C]" in x or"LSC IGBT temp. - AVE [C]" in x:
+            return "LSC IGBT Temp[AVE]"
+        elif "C11_CON/.Glo.Con.GscIgbTemMax - AVE [C]" in x or "Gen-side IGBT max.temp. - AVE [C]" in x or"GSC IGBT temp. - AVE [C]" in x:
+            return "GSC IGBT Temp[AVE]"
+        elif "Energy production 10min - SUM [kWh]" in x or "@Cnt10mProPow - SUM [kWh]" in x or "Energy production 10min - SUM [kWh]"in x:
+            return "Total Day Power Production[kWh]"
+        elif "C11/.Glo.Gri.PowAct - AVE [kW]" in x or "Active power - AVE [kW]" in x or "C11_5/.Glo.Gri.PowActNet - AVE [kW]"in x :
+            return "Active power - AVE [kW]"
+
+        return x
+
     # Data Cleaning : 1.unwanted column source name deleted
     df1 = df.drop(["Source name"], axis=1)
     # Tanspose the excel file
@@ -44,12 +59,14 @@ if uploaded_file is not None:
     df_new = df2.iloc[0]
     df2 = df2.iloc[1:]
     df2.columns = df_new
-    df3 = df2.drop(["Log time (UTC)"], axis=1)
+    df300 = df2.drop(["Log time (UTC)"], axis=1)
+    df3 = df300.rename(columns=renaming_fun)
     df15=df3["Log time (Local)"].iloc[:1]
     df16=df15[0]
     st.write("You are viewing data of date-:",df16)
-    df17 = df3["Wind speed - AVE [m/s]"].mean()
-    st.write("Day Average Wind Speed-:", df17)
+    df17 = (df3["Wind speed - AVE [m/s]"].mean())
+    df30=(df17.round(2))
+    st.write("Day Average Wind Speed [m/s]-:", df30)
 
 
     st.sidebar.title("Select Visual Charts")
@@ -78,7 +95,7 @@ if uploaded_file is not None:
                       title="Blade Temperature)")
         fig.update_xaxes(showgrid=True, gridwidth=0.5, gridcolor='Grey')
         fig.update_yaxes(showgrid=True, gridwidth=0.5, gridcolor='Grey')
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, use_container_width=True, Width=00)
 
     if chart_visual == 'GearBox Temperature':
         fig = go.Figure()
@@ -118,7 +135,7 @@ if uploaded_file is not None:
         fig = go.Figure()
          #IGBT temperature
         df6 = df3[
-            ['Gen-side IGBT max.temp. - MAX [C]', 'Line-side IGBT max.temp. - MAX [C]', 'Cooling plate temp. - MAX [C]','Converter cab. 1 temp. - MAX [C]',
+            ['GSC IGBT Temp[AVE]', 'LSC IGBT Temp[AVE]', 'Cooling plate temp. - MAX [C]','Converter cab. 1 temp. - MAX [C]',
              'Wind speed - AVE [m/s]']]
         fig = px.line(df6, x=df6.index, y=df6.columns[0:5],title="IGBT Temperature   (IGBT-Warning-85,Error-90,Plate-(Warning-55,Error-60))")
         fig.update_xaxes(showgrid=True, gridwidth=0.5, gridcolor='Grey')
@@ -161,21 +178,22 @@ if uploaded_file is not None:
 
         #df17=df3["Wind speed - AVE [m/s]"].mean()
         #st.write("Day Average Wind Speed-:", df17)
-        df18 = df3["Energy production 10min - SUM [kWh]"].sum()
-        st.write("Total Day Production(KWh)-:", df18)
+        df18 = df3["Total Day Power Production[kWh]"].sum()
+        df32=(round(df18,2));
+        st.write("Total Day Production [KWh]-:",df32)
 
-        plt.figure(figsize=(25,15))
-        plt.plot(df3['Wind speed - AVE [m/s]'], df3['Active power - AVE [kW]'], 'o', label='Real Power')
-        plt.plot(Ideal_data1['x'], Ideal_data1['y'], '-', label='Ideal_power_curve (kwh)',lw=5)
-        plt.xlabel('wind speed (m/s)', size=25)
-        plt.ylabel('Power Production (kw)', size=25)
-        plt.title('--- Wind Turbine Power Production ---', size=30)
-        plt.legend(fontsize=25)
-        plt.xticks([0,2,4,6,8,10,12,14,16,18,20],size=20)
-        plt.yticks([0,200,400,600,800,1000,1200,1400,1600,1800,2000,2200],size=20)
+        plt.figure(figsize=(15,8))
+        plt.plot(df3['Wind speed - AVE [m/s]'], df3['Active power - AVE [kW]'], 'o',label='Real Power')
+        plt.plot(Ideal_data1['x'], Ideal_data1['y'], '-', label='Ideal Power Curve (kwh)',lw=4)
+        plt.xlabel('wind speed (m/s)', size=10)
+        plt.ylabel('Power Production (kw)', size=10)
+        plt.title('--- Wind Turbine Power Production ---', size=15)
+        plt.legend(fontsize=15)
+        plt.xticks([0,2,4,6,8,10,12,14,16,18,20],size=12)
+        plt.yticks([0,200,400,600,800,1000,1200,1400,1600,1800,2000,2200],size=12)
         plt.grid()
         st.pyplot()
-        st.write("Welcome to Git....Code is push")
+
 
 
 
