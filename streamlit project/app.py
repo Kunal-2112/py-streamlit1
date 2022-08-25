@@ -19,9 +19,9 @@ html_temp = """
     <div style ="background-color:#00aebd;border-style:solid;">
     <img src="https://renom.in/wp-content/uploads/2022/02/cropped-renom-logo.86b197ce-e1644472068111-1.png" style="float:Right;width:200px;height:50px;border:orange; border-width:5px; border-style:solid;">
     <h1 style ="color:black;text-align:center;">INOX TML Analysis</h1>
-    <h2 style ="color:black;text-align:center;">O&M-Engineering </h2>
-    <h3 style ="color:black;text-align:center;">Renom Energy Services Pvt Ltd </h3>
-    <h6 style ="color:black;text-align:center;"> Preapred By-Kunal lite/Suraj Shinde</h6></header>
+    <h2 style ="color:black;text-align:center;"> Renom Energy Services Pvt Ltd </h2>
+    <h3 style ="color:black;text-align:center;">Engineering/SCADA</h3>
+    </header>
     </div>
 
     """
@@ -171,8 +171,11 @@ if uploaded_file is not None:
 
     if chart_visual == 'Power Chart':
         df8 = df3[['Active power - AVE [kW]', 'Wind speed - AVE [m/s]']]
-        fig = px.scatter(df8, x=df8.index, y=df8.columns[0:2], title="Production (kw)")
-        st.plotly_chart(fig)
+
+        #fig = px.bar(df8, x='Wind speed - AVE [m/s]', y='Active power - AVE [kW]', title="Production (kw)")
+        fig=df8.plot(x="Wind speed - AVE [m/s]", y="Active power - AVE [kW]", kind="bar", figsize=(30, 6))
+        #st.plotly_chart(fig)
+        st.pyplot()
 
     if chart_visual == 'Power Curve':
 
@@ -180,7 +183,7 @@ if uploaded_file is not None:
         #st.write("Day Average Wind Speed-:", df17)
         df18 = df3["Total Day Power Production[kWh]"].sum()
         df32=(round(df18,2));
-        st.write("Total Day Production [KWh]-:",df32)
+        st.write("Total Day Production [KWh]-:",df32,size=20)
 
         plt.figure(figsize=(15,8))
         plt.plot(df3['Wind speed - AVE [m/s]'], df3['Active power - AVE [kW]'], 'o',label='Real Power')
@@ -193,6 +196,7 @@ if uploaded_file is not None:
         plt.yticks([0,200,400,600,800,1000,1200,1400,1600,1800,2000,2200],size=12)
         plt.grid()
         st.pyplot()
+
 
 
 

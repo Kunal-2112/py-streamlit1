@@ -1,0 +1,7 @@
+streamlit
+numpy
+pandas
+plotly.graph_objects
+plotly.express
+matplotlib.pyplot
+warnings
