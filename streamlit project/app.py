@@ -196,6 +196,8 @@ if uploaded_file is not None:
         plt.yticks([0,200,400,600,800,1000,1200,1400,1600,1800,2000,2200],size=12)
         plt.grid()
         st.pyplot()
+        df333=df3[['Wind speed - AVE [m/s]','Active power - AVE [kW]']]
+        st.write(df333)
 
 
 
