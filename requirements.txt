@@ -1,6 +1,7 @@
-streamlit
-numpy
-pandas
-plotly.express
-matplotlib.pyplot
-warnings
+streamlit==1.12.0
+pandas==1.4.3
+numpy==1.23.2
+matplotlib==3.5.3
+plotly==5.10.0
+plotly-express==0.4.1
+openpyxl==3.0.10
