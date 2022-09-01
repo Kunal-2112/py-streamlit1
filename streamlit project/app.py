@@ -18,6 +18,7 @@ html_temp = """
     <header style="font-size:10px;width=100">
     <div style ="background-color:#00aebd;border-style:solid;">
     <img src="https://renom.in/wp-content/uploads/2022/02/cropped-renom-logo.86b197ce-e1644472068111-1.png" style="float:Right;width:200px;height:50px;border:orange; border-width:5px; border-style:solid;">
+    <a href="https://renom.in/" target="blank"> Click here to view Renom Page </a>
     <h1 style ="color:black;text-align:center;">INOX TML Analysis</h1>
     <h2 style ="color:black;text-align:center;"> Renom Energy Services Pvt Ltd </h2>
     <h3 style ="color:black;text-align:center;">Engineering/SCADA</h3>
@@ -177,6 +178,14 @@ if uploaded_file is not None:
         #st.plotly_chart(fig)
         st.pyplot()
 
+        fig = px.line(df8, x=df8.index, y=df8.columns[0:2])
+        fig.update_xaxes(showgrid=True, gridwidth=0.5, gridcolor='Grey')
+        fig.update_yaxes(showgrid=True, gridwidth=0.5, gridcolor='Grey')
+        fig.update_traces()
+        st.plotly_chart(fig, use_container_width=True)
+
+
+
     if chart_visual == 'Power Curve':
 
         #df17=df3["Wind speed - AVE [m/s]"].mean()
@@ -196,7 +205,7 @@ if uploaded_file is not None:
         plt.yticks([0,200,400,600,800,1000,1200,1400,1600,1800,2000,2200],size=12)
         plt.grid()
         st.pyplot()
-        df333=df3[['Wind speed - AVE [m/s]','Active power - AVE [kW]']]
+        df333=df3[['Wind speed - AVE [m/s]','Active power - AVE [kW]','PLC state - MAX','Converter state - MAX','Yaw state - MAX']]
         st.write(df333)
 
 
