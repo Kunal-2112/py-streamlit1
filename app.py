@@ -18,7 +18,7 @@ html_temp = """
     <header style="font-size:10px;width=100">
     <div style ="background-color:#00aebd;border-style:solid;">
     <img src="https://renom.in/wp-content/uploads/2022/02/cropped-renom-logo.86b197ce-e1644472068111-1.png" style="float:Right;width:200px;height:50px;border:orange; border-width:5px; border-style:solid;">
-    <a href="https://renom.in/" target="blank"> Click here to view Renom Page </a>
+   # <a href="https://renom.in/" target="blank"> Click here to view Renom Page </a>
     <h1 style ="color:black;text-align:center;">INOX TML Analysis</h1>
     <h2 style ="color:black;text-align:center;"> Renom Energy Services Pvt Ltd </h2>
     <h3 style ="color:black;text-align:center;">Engineering/SCADA</h3>
