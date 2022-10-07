@@ -21,7 +21,7 @@ html_temp = """
     <a href="https://renom.in/" target="blank" > Click here to view Renom Page </a>
     <h1 style ="color:black;text-align:center;">INOX TML Analysis</h3>
     <h2 style ="color:black;text-align:center;"> Renom Energy Services Pvt Ltd </h5>
-    <h3 style ="color:black;text-align:center;">Engineering/SCADA</h5>
+    <h3 style ="color:black;text-align:center;">Engineering</h5>
     </header>
     </div>
     """
